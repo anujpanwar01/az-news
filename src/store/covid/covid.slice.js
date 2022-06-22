@@ -1,8 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   country: null,
-  isLoading: false,
-  error: "",
+  notification: null,
 };
 const covidSlice = createSlice({
   name: "covid-slice",
@@ -11,11 +10,11 @@ const covidSlice = createSlice({
     covidCountry: (state, action) => {
       state.country = action.payload;
     },
-    countryIsLoading: (state, action) => {
-      state.isLoading = action.payload;
+    setNotification: (state, action) => {
+      state.notification = action.payload;
     },
   },
 });
 
-export const { covidCountry, countryIsLoading } = covidSlice.actions;
+export const { covidCountry, setNotification } = covidSlice.actions;
 export default covidSlice;
