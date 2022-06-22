@@ -1,9 +1,15 @@
-import { countryIsLoading, covidCountry } from "./covid.slice";
+import { setNotification, covidCountry } from "./covid.slice";
 
-export const userCountry = (countryName = "india", byLocation) => {
+export const userCountry = (countryName = "india") => {
   return async (dispatch) => {
     const countryCovidDeatil = async () => {
-      dispatch(countryIsLoading(true));
+      dispatch(
+        setNotification({
+          status: "pending",
+          title: "Fetching",
+          message: "Data is fetching...",
+        })
+      );
       const res = await fetch("https://api.covid19api.com/summary");
       const data = await res.json();
 
@@ -32,11 +38,31 @@ export const userCountry = (countryName = "india", byLocation) => {
 
     try {
       const userCountry = await countryCovidDeatil();
-      dispatch(countryIsLoading(false));
+      if (userCountry)
+        dispatch(
+          setNotification({
+            status: "successfull",
+            title: "Success",
+            message: "Data fetched successfully",
+          })
+        );
+      else
+        dispatch(
+          setNotification({
+            status: "error",
+            title: "Error",
+            message: "Country Not found...",
+          })
+        );
       dispatch(covidCountry(userCountry));
     } catch (err) {
-      dispatch(countryIsLoading(false));
-      console.log(err);
+      dispatch(
+        setNotification({
+          status: "error",
+          title: "Error",
+          message: "Somthing went wrong...",
+        })
+      );
     }
   };
 };

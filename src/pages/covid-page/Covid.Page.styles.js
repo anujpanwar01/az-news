@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { flex } from "../../global-styles/resuable.styles";
 import SearchForm from "../../components/search-box/SearchForm";
+
 const commonStyle = css`
   ${flex("center", "column")}
   background: #d00000;
@@ -19,31 +20,7 @@ const commonStyle = css`
     margin-top: 1rem;
   }
 `;
-export const Form = styled(SearchForm)`
-  margin-bottom: 2rem;
-  ${flex()}
-
-  input {
-    font-size: 1.8rem;
-    width: 80%;
-    ${"" /* margin-left: 2rem; */}
-    padding: 1rem;
-    background: transparent;
-    border: none;
-    &::placeholder {
-      font-size: 1.8rem;
-    }
-    &:focus,
-    &:active {
-      outline: none;
-    }
-  }
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-  }
-`;
+export const Form = styled(SearchForm)``;
 export const NewCases = styled.div`
   ${commonStyle};
 `;
@@ -58,6 +35,7 @@ export const NewRecovered = styled.div`
 export const CovidContainer = styled.section`
   display: grid;
   grid-template-columns: 1fr 3fr;
+  position: relative;
   @media only screen and (max-width: 56.25em) {
     grid-template-columns: 1fr 2fr;
   }

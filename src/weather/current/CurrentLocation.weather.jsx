@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/use-fetch";
 import useWeather from "../../hooks/use-weather";
-import { countryCode } from "../../store/weather.slice";
+import { countryCode } from "../../store/weather/weather.slice";
 import { useDispatch } from "react-redux";
 let latitude = 0;
 let longitude = 0;
