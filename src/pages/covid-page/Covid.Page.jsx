@@ -30,7 +30,7 @@ const CovidPage = () => {
   } = useCroods();
 
   const { covid } = useSelector((state) => state);
-  console.log(covid);
+
   const inputRef = useRef();
 
   useEffect(() => {

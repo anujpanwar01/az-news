@@ -17,8 +17,14 @@ export const WeatherPageSection = styled.section`
 export const Form = styled(SearchForm)`
   margin-bottom: 3rem;
   width: 100%;
+  height: 5rem;
+  box-shadow: 0 0 2rem #0000003b;
+  border-radius: 1rem;
+  justify-content: space-around;
+
   button {
     ${flex()}
+    transform: rotate(90deg);
     svg {
       height: 2.4rem;
       width: 2.4rem;
@@ -30,17 +36,26 @@ export const CurrentDayWeather = styled(CurrentWeather)`
   min-height: 100vh;
   ${flex("", "column")}
   background:#dedede;
-  padding: 2rem 1rem 3rem;
-
+  padding: 1rem 1rem 2rem;
+  box-shadow: 0.4rem 0 1.6rem #00000021;
   h3 {
     font-size: 2.4rem;
     margin-bottom: 2rem;
     font-weight: 300;
   }
-  img {
+  .icon-container {
+    ${flex("center", "column")}
     height: 15rem;
     width: 15rem;
     margin-bottom: 3rem;
+    img {
+      height: 80%;
+      width: 80%;
+    }
+    p {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+    }
   }
   div {
     ${flex()}
@@ -76,8 +91,10 @@ export const CurrentDayWeather = styled(CurrentWeather)`
     }
   }
   h2 {
-    font-size: 4.8rem;
+    font-size: 2.4rem;
     font-weight: 200;
+    text-align: center;
+    hypens: auto;
   }
 `;
 export const FullWeatherCast = styled.div``;

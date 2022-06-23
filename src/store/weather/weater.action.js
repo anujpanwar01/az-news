@@ -1,6 +1,6 @@
 import { setIsLoading, weather } from "./weather.slice";
 
-export const getCurrentWeather = (cityName) => {
+export const getCurrentWeather = (cityName, lat, lon) => {
   const api_key = process.env.REACT_APP_WEATHER_API;
 
   const day = [
@@ -16,40 +16,66 @@ export const getCurrentWeather = (cityName) => {
     dispatch(setIsLoading(true));
 
     const userLocationWeather = async () => {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api_key}&units=metric`
-      );
-      const data = await res.json();
+      let data;
+      if (cityName) {
+        const res = await fetch(
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}?unitGroup=us&key=${api_key}&contentType=json`
+        );
+
+        data = await res.json();
+      } else {
+        const res = await fetch(
+          `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${lon}?key=${api_key}`
+        );
+
+        data = await res.json();
+      }
 
       return data;
     };
+
     try {
       const data = await userLocationWeather();
       const transformedData = [];
 
-      const date = `${new Date().getDate()}/${
+      const date = `${new Date().getUTCFullYear()}-${
         new Date().getUTCMonth() + 1
-      }/${new Date().getUTCFullYear()}`;
+      }-${new Date().getDate()}`;
 
       transformedData.push({
         name: data.name,
-        sunrise: new Date(data?.sys?.sunrise * 1000).toLocaleTimeString(),
-        sunset: new Date(data?.sys?.sunset * 1000).toLocaleTimeString(),
-        visibility: `${data?.visibility / 1000} Km`,
-        latitude: data?.coord?.lat,
-        longitude: data?.coord?.lon,
-        temp: data?.main?.temp,
-        minTemp: data?.main?.temp_min,
-        feelsLike: data?.main?.feels_like,
-        pressure: `${(data?.main?.pressure * 0.02953).toFixed(
+        sunStatus: [
+          {
+            sunrise: new Date(
+              `${date} ${data?.currentConditions?.sunrise}`
+            ).toLocaleString(),
+          },
+          {
+            sunset: new Date(
+              `${date} ${data?.currentConditions?.sunset}`
+            ).toLocaleString(),
+          },
+        ],
+        visibility: data?.currentConditions.visibility,
+        latitude: data?.latitude,
+        longitude: data?.longitude,
+        temp: ((data?.currentConditions?.temp - 32) * 0.55).toFixed(2),
+        minTemp: data?.days[0]?.tempmin,
+        maxTemp: data?.days[0]?.tempmax,
+        feelsLike: ((data?.days[0]?.feelslikemax - 32) * 0.55).toFixed(2),
+        pressure: `${(data?.currentConditions?.pressure * 0.02953).toFixed(
           2
         )} inch of mercury [0 °C]`,
-        message: data?.weather[0]?.main,
-        des: data?.weather[0]?.description,
-        icon: data?.weather[0]?.icon,
+        message: data?.currentConditions?.conditions,
+        des: data?.description,
+        icon: data?.currentConditions?.icon,
         date,
         day: day[new Date().getDay() - 1],
         clouds: `${data?.clouds?.all}%`,
+        humidity: data?.currentConditions?.humidity,
+        timezone: data?.timezone,
+        todayHours: data?.days[0],
+        days: data?.days,
       });
 
       dispatch(setIsLoading(false));
