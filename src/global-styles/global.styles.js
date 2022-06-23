@@ -108,7 +108,7 @@ export const GlobalStyle = createGlobalStyle`
     background: transparent;
     border: none;
     &::placeholder {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
     &:focus,
     &:active {

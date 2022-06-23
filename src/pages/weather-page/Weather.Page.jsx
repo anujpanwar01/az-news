@@ -4,10 +4,10 @@ import Spinner from "../../components/spinner/Spinner";
 import useCroods from "../../hooks/use-croods";
 import { getCurrentWeather } from "../../store/weather/weater.action";
 import { BiSearchAlt } from "react-icons/bi";
+import FullDayWeather from "../../components/full-day/FullDay";
 import {
   CurrentDayWeather,
   Form,
-  FullWeatherCast,
   WeatherPageSection,
 } from "./Weather.Page.styles";
 
@@ -18,34 +18,31 @@ const WeatherPage = () => {
   const dispatch = useDispatch();
   const {
     userCountryCode: { adminName1: cityName, countryCode },
+    latitude: lat,
+    longitude: lon,
   } = useCroods();
   const [userTypedCity, setUserTypedCity] = useState("");
 
   const submitFormHandler = (e) => {
     e.preventDefault();
-    const enteredCountry = inputRef.current.value;
-    if (!enteredCountry) {
+    const enteredCity = inputRef.current?.value;
+
+    if (!enteredCity) {
       return;
     }
     // capitalize first character
-    const capitalizeCountryName = enteredCountry
+    const capitalizeCityName = enteredCity
       .trim()
       .split(" ")
       .map((letter) => letter[0].toUpperCase().concat(letter.slice(1)))
       .join(" ");
-
-    setUserTypedCity(capitalizeCountryName);
+    setUserTypedCity(capitalizeCityName);
   };
 
   useEffect(() => {
     if (!cityName || !countryCode) return;
-    dispatch(
-      getCurrentWeather(
-        (!!userTypedCity && userTypedCity) || cityName,
-        countryCode
-      )
-    );
-  }, [dispatch, cityName, countryCode, userTypedCity]);
+    dispatch(getCurrentWeather(userTypedCity, lat, lon));
+  }, [dispatch, cityName, countryCode, userTypedCity, lat, lon]);
 
   return (
     <WeatherPageSection>
@@ -66,7 +63,7 @@ const WeatherPage = () => {
             </Form>
           </CurrentDayWeather>
 
-          <FullWeatherCast></FullWeatherCast>
+          <FullDayWeather weather={currentWeather} />
         </>
       )}
     </WeatherPageSection>

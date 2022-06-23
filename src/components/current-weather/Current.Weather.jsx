@@ -1,3 +1,5 @@
+import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { FaTemperatureHigh } from "react-icons/fa";
@@ -24,10 +26,13 @@ const CurrentWeather = (props) => {
           {props.children}
           <h3>{currentWeather?.date}</h3>
           {props?.currentWeather?.icon && (
-            <img
-              src={`http://openweathermap.org/img/w/${currentWeather?.icon}.png`}
-              alt={currentWeather?.name}
-            />
+            <div className="icon-container">
+              <img
+                src={`https://github.com/visualcrossing/WeatherIcons/blob/main/PNG/2nd%20Set%20-%20Color/${currentWeather?.icon}.png?raw=true`}
+                alt={currentWeather?.name}
+              />
+              <p>{currentWeather?.message}</p>
+            </div>
           )}
           <div className="temp">
             <h1>{currentWeather?.temp}</h1>
@@ -42,7 +47,7 @@ const CurrentWeather = (props) => {
             <FaTemperatureHigh size={20} />
             <p>{currentWeather?.feelsLike} °C</p>
           </div>
-          <h2>{currentWeather?.name}</h2>
+          <h2>{currentWeather?.des}</h2>
         </div>
       )}
     </>
