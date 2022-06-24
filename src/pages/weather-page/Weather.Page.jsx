@@ -33,9 +33,11 @@ const WeatherPage = () => {
     userCountryCode: { adminName1: cityName, countryCode },
     latitude: lat,
     longitude: lon,
+    isCroodsLoading,
+    geoError: error,
   } = useCroods();
   const [userTypedCity, setUserTypedCity] = useState("");
-
+  console.log(isCroodsLoading);
   const submitFormHandler = (e) => {
     e.preventDefault();
     const enteredCity = inputRef.current?.value;
@@ -59,7 +61,10 @@ const WeatherPage = () => {
 
   return (
     <WeatherPageSection>
-      {weather?.isLoading && <Spinner className="weather-spinner" />}
+      {(weather?.isLoading || isCroodsLoading) && (
+        <Spinner className="weather-spinner" />
+      )}
+      {error && !isCroodsLoading && <p className="error-text">{error}</p>}
       {!weather?.isLoading && (
         <>
           <CurrentDayWeather
