@@ -3,8 +3,8 @@ import { setUnit } from "../../store/weather/weather.slice";
 import { FullDayNavigation } from "./FullDayNav.styles";
 
 const FullDayNav = ({ navActive, onTodayActive, onWeekActive }) => {
-  const weather = useSelector((state) => state.weather);
-  console.log(weather);
+  const { unit } = useSelector((state) => state.weather);
+
   const dispatch = useDispatch();
   const celcius = () => dispatch(setUnit("c"));
   const fahrenheit = () => dispatch(setUnit("f"));
@@ -12,9 +12,18 @@ const FullDayNav = ({ navActive, onTodayActive, onWeekActive }) => {
   return (
     <FullDayNavigation>
       <div className="unit">
-        <button onClick={celcius}>°C</button>
-        <button onClick={fahrenheit}>°F</button>
-        <button onClick={kelvin}>K</button>
+        <button onClick={celcius}>
+          <span className={unit !== "c" ? "down" : "no-down"}>°C</span>
+          <span className={unit === "c" ? "up" : "no-up"}>°C</span>
+        </button>
+        <button onClick={fahrenheit}>
+          <span className={unit !== "f" ? "down" : "no-down"}>°F</span>
+          <span className={unit === "f" ? "up" : "no-up"}>°F</span>
+        </button>
+        <button onClick={kelvin}>
+          <span className={unit !== "k" ? "down" : "no-down"}>K</span>
+          <span className={unit === "k" ? "up" : "no-up"}>K</span>
+        </button>
       </div>
       <ul>
         <li>

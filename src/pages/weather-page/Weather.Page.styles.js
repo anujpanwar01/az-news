@@ -7,7 +7,18 @@ export const WeatherPageSection = styled.section`
   grid-template-columns: 1fr 3fr;
   min-height: 100vh;
   min-weight: 100%;
+  @media only screen and (max-width: 950px) {
+    grid-template-columns: 1fr;
+  }
   .weather-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .error-text {
+    color: #f00000;
+    font-size: 2rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -21,7 +32,9 @@ export const Form = styled(SearchForm)`
   box-shadow: 0 0 2rem #0000003b;
   border-radius: 1rem;
   justify-content: space-around;
-
+  @media only screen and (max-width: 900px) {
+    width: 90%;
+  }
   button {
     ${flex()}
     transform: rotate(90deg);
@@ -66,6 +79,9 @@ export const CurrentDayWeather = styled(CurrentWeather)`
     h1 {
       font-size: 7.2rem;
       font-weight: 300;
+      @media only screen and (max-width: 1100px) {
+        font-size: 5.4rem;
+      }
     }
     p {
       position: absolute;

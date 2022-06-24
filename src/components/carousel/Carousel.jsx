@@ -37,7 +37,7 @@ const Carousel = (props) => {
                     <p>{weather?.datetime}</p>
                     <div className="min-max-temp">
                       <p>{props.unitConverter(weather.temp, unit)} </p>-
-                      <p>{props.unitConverter(weather.feelslike, unit)} °C</p>
+                      <p>{props.unitConverter(weather.feelslike, unit)}</p>
                     </div>
                   </TodayHourWeather>
                 ))}

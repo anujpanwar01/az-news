@@ -24,9 +24,9 @@ const CovidPage = () => {
   const dispatch = useDispatch();
   const {
     userCountryCode: { countryName },
-    browserError,
-    otherGeolocationError,
     apiError,
+    geoError,
+    isCroodsLoading,
   } = useCroods();
 
   const { covid } = useSelector((state) => state);
@@ -59,10 +59,10 @@ const CovidPage = () => {
   };
   let statusContent;
 
-  if (!!browserError) {
+  if (geoError) {
     statusContent = (
       <DataStatus
-        content={browserError}
+        content={geoError}
         className="error-text"
         status="error-status"
         btnClassName="error-btn"
@@ -70,26 +70,10 @@ const CovidPage = () => {
         setIsFetching={setIsFetching}
       >
         <AiFillWarning size={24} />
-        {browserError}
+        {/* {browserError} */}
       </DataStatus>
     );
-  }
-
-  if (!!otherGeolocationError) {
-    statusContent = (
-      <DataStatus
-        content={otherGeolocationError}
-        className="error-text"
-        status="error-status"
-        btnClassName="error-btn"
-        fetch={isFetching}
-        setIsFetching={setIsFetching}
-      >
-        <AiFillWarning size={24} className="error-svg" />
-      </DataStatus>
-    );
-  }
-  if (!!apiError) {
+  } else if (apiError) {
     statusContent = (
       <DataStatus
         content={apiError}
@@ -102,8 +86,7 @@ const CovidPage = () => {
         <AiFillWarning size={24} className="error-svg" />
       </DataStatus>
     );
-  }
-  if (covid.notification?.status === "pending") {
+  } else if (covid.notification?.status === "pending") {
     statusContent = (
       <DataStatus
         content={covid.notification.message}
@@ -116,8 +99,7 @@ const CovidPage = () => {
         <FaHourglassEnd size={24} className="pending-svg" />
       </DataStatus>
     );
-  }
-  if (covid.notification?.status === "successfull") {
+  } else if (covid.notification?.status === "successfull") {
     statusContent = (
       <DataStatus
         content={covid.notification.message}
@@ -130,8 +112,7 @@ const CovidPage = () => {
         <AiOutlineCheckCircle size={24} className="success-svg" />
       </DataStatus>
     );
-  }
-  if (covid.notification?.status === "error") {
+  } else if (covid.notification?.status === "error") {
     statusContent = (
       <DataStatus
         content={covid.notification.message}
@@ -145,40 +126,48 @@ const CovidPage = () => {
       </DataStatus>
     );
   }
+
   return (
     <CovidContainer>
-      {statusContent}
-      <CovidCurrentDate>
-        <Form
-          className="form"
-          labelFor="search"
-          id="search"
-          type="search"
-          placeholder="Search Any country ..."
-          ref={inputRef}
-          submitHandler={submitFormHandler}
-        >
-          <BiSearchAlt size={24} />
-        </Form>
+      {(!isCroodsLoading || geoError || apiError) && statusContent}
+      {(!isCroodsLoading || !geoError || !apiError) && (
+        <>
+          <CovidCurrentDate>
+            <Form
+              className="form"
+              labelFor="search"
+              id="search"
+              type="search"
+              placeholder="Search Any country ..."
+              ref={inputRef}
+              submitHandler={submitFormHandler}
+            >
+              <BiSearchAlt size={24} />
+            </Form>
 
-        <h3>{covid?.country?.Country || " Country"}</h3>
-        <NewCases>
-          <h4>New Cases</h4>
-          <p>
-            {covid?.country?.NewConfirmed.toLocaleString(countryLocalLang) || 0}
-          </p>
-        </NewCases>
-        <NewDeath>
-          <h4>New Deaths</h4>
-          <p>
-            {covid?.country?.NewDeaths.toLocaleString(countryLocalLang) || 0}
-          </p>
-        </NewDeath>
-        <NewRecovered>
-          <h4>New Recovered</h4>
-          <p>{covid?.country?.NewRecovered || 0}</p>
-        </NewRecovered>
-      </CovidCurrentDate>
+            <h3>{covid?.country?.Country || " Country"}</h3>
+            <NewCases>
+              <h4>New Cases</h4>
+              <p>
+                {covid?.country?.NewConfirmed.toLocaleString(
+                  countryLocalLang
+                ) || 0}
+              </p>
+            </NewCases>
+            <NewDeath>
+              <h4>New Deaths</h4>
+              <p>
+                {covid?.country?.NewDeaths.toLocaleString(countryLocalLang) ||
+                  0}
+              </p>
+            </NewDeath>
+            <NewRecovered>
+              <h4>New Recovered</h4>
+              <p>{covid?.country?.NewRecovered || 0}</p>
+            </NewRecovered>
+          </CovidCurrentDate>
+        </>
+      )}
       <CovidHistory data={covid?.country} lang={countryLocalLang} />
     </CovidContainer>
   );
