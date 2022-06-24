@@ -59,10 +59,10 @@ export const getCurrentWeather = (cityName, lat, lon) => {
         visibility: data?.currentConditions.visibility,
         latitude: data?.latitude,
         longitude: data?.longitude,
-        temp: ((data?.currentConditions?.temp - 32) * 0.55).toFixed(2),
+        temp: data?.currentConditions?.temp,
         minTemp: data?.days[0]?.tempmin,
         maxTemp: data?.days[0]?.tempmax,
-        feelsLike: ((data?.days[0]?.feelslikemax - 32) * 0.55).toFixed(2),
+        feelsLike: data?.days[0]?.feelslikemax,
         pressure: `${(data?.currentConditions?.pressure * 0.02953).toFixed(
           2
         )} inch of mercury [0 °C]`,

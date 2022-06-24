@@ -4,7 +4,6 @@ import {
   SunStatus,
   Temprature,
   TodayHoursWeather,
-  TodayHourWeather,
   Visibility,
   Pressure,
   LatLon,
@@ -15,15 +14,31 @@ import { HiArrowNarrowRight, HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { MdOutlineVisibility } from "react-icons/md";
 import { FaTemperatureHigh, FaTemperatureLow } from "react-icons/fa";
 import { TiGlobe } from "react-icons/ti";
-import { useState } from "react";
-const FullDayWeather = (props) => {
-  const hour = Array.from(document.querySelectorAll(".hour"));
+import { useState, useEffect } from "react";
+import Carousel from "../carousel/Carousel";
+import { useSelector } from "react-redux";
+import FullDayNav from "../full-day-nav/FullDayNav";
 
+const FullDayWeather = (props) => {
+  const [hour, setHour] = useState([]);
   const [active, setAcitve] = useState(0);
+  const [navActive, setNavActive] = useState(true);
+  const { unit } = useSelector((state) => state.weather);
+
+  useEffect(() => {
+    let current;
+    if (navActive) {
+      current = Array.from(document.querySelectorAll(".hour"));
+    } else {
+      current = Array.from(document.querySelectorAll(".week"));
+    }
+    setHour(current);
+  }, [navActive]);
+
+  /////////////////////////////////////////////////////////////////////////////
   if (!props.weather?.sunStatus) {
     return;
   }
-  console.log(active);
 
   const [sunrise, sunset] = props.weather?.sunStatus.map((ele) => {
     let val;
@@ -38,7 +53,7 @@ const FullDayWeather = (props) => {
 
   const leftCarouselBtn = () =>
     setAcitve((active) => {
-      if (active === 0) {
+      if (active === 0 || active > hour.length) {
         return (active = 0);
       } else {
         return active - 1;
@@ -46,15 +61,25 @@ const FullDayWeather = (props) => {
     });
   const rightCarouselBtn = () =>
     setAcitve((active) => {
-      if (active === hour.length) {
+      if (active === hour.length || active > hour.length) {
         return (active = hour.length);
       } else {
         return active + 1;
       }
     });
+
+  const dayNavActive = () => setNavActive(true);
+  const weekNavActive = () => setNavActive(false);
   return (
     <FullDayWeatherCast>
       <h2>Time Zone -: {props.weather?.timezone}</h2>
+
+      <FullDayNav
+        navActive={navActive}
+        onTodayActive={dayNavActive}
+        onWeekActive={weekNavActive}
+      />
+
       <TodayHoursWeather>
         <button
           className="left-btn"
@@ -63,23 +88,13 @@ const FullDayWeather = (props) => {
         >
           <HiOutlineArrowNarrowLeft />
         </button>
-        {props.weather?.todayHours?.hours.map((weather, i) => (
-          <TodayHourWeather
-            key={i}
-            className="hour"
-            style={{ transform: `translateX(-${active * 100}%)` }}
-          >
-            <img
-              src={`https://github.com/visualcrossing/WeatherIcons/blob/main/PNG/2nd%20Set%20-%20Color/${weather?.icon}.png?raw=true`}
-              alt={weather.conditions}
-            />
-            <p>{weather.datetime.toLocaleString()}</p>
-            <div className="min-max-temp">
-              <p>{((weather.temp - 32) * 0.55).toFixed(2)} </p>-
-              <p>{((weather.feelslike - 32) * 0.55).toFixed(2)} C</p>
-            </div>
-          </TodayHourWeather>
-        ))}
+        <Carousel
+          weather={props.weather}
+          active={active}
+          navActive={navActive}
+          unitConverter={props.unitConverter}
+        />
+
         <button
           className="right-btn"
           onClick={rightCarouselBtn}
@@ -110,13 +125,13 @@ const FullDayWeather = (props) => {
             <span className="high-temp">
               <FaTemperatureHigh />
             </span>
-            <p>{((props.weather?.maxTemp - 32) * 0.55).toFixed(2)} C</p>
+            <p>{props.unitConverter(props.weather?.maxTemp, unit)}</p>
           </div>
           <div>
             <span className="low-temp">
               <FaTemperatureLow />
             </span>
-            <p>{((props.weather?.minTemp - 32) * 0.55).toFixed(2)} C</p>
+            <p>{props.unitConverter(props.weather?.minTemp, unit)}</p>
           </div>
         </Temprature>
         <Humidity>
@@ -165,26 +180,3 @@ const FullDayWeather = (props) => {
   );
 };
 export default FullDayWeather;
-/*
-clouds: "undefined%"
-date: "2022-6-23"
-day: "Thrusday"
-days: (15) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-des: "Cooling down with a chance of rain Thursday."
-feelsLike: "40.92"
-humidity: 16.99
-icon: "clear-day"
-latitude: 27.1766701
-longitude: 78.0080745
-maxTemp: 107
-message: "Clear"
-minTemp: 89.7
-name: undefined
-pressure: "29.50 inch of mercury [0 °C]"
-sunrise: "05:24:35"
-sunset: "6/23/2022, 6:45:47 PM"
-temp: "41.25"
-timezone: "Asia/Kolkata"
-todayHours: {datetime: '2022-06-23', datetimeEpoch: 1655922600, tempmax: 107, tempmin: 89.7, temp: 98.6, …}
-visibility: 15
-*/

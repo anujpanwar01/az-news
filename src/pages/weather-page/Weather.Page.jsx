@@ -10,7 +10,20 @@ import {
   Form,
   WeatherPageSection,
 } from "./Weather.Page.styles";
-
+const unitConverter = (data, unit) => {
+  const dot = unit !== "k" ? "°" : "";
+  let temp;
+  if (unit === "c") {
+    temp = (data - 32) * 0.55;
+  }
+  if (unit === "f") {
+    temp = data;
+  }
+  if (unit === "k") {
+    temp = (data - 32) * 0.55 + 273.15;
+  }
+  return temp.toFixed(2) + dot + unit.toUpperCase();
+};
 const WeatherPage = () => {
   const { weather } = useSelector((state) => state);
   const inputRef = useRef();
@@ -49,7 +62,10 @@ const WeatherPage = () => {
       {weather?.isLoading && <Spinner className="weather-spinner" />}
       {!weather?.isLoading && (
         <>
-          <CurrentDayWeather currentWeather={currentWeather}>
+          <CurrentDayWeather
+            currentWeather={currentWeather}
+            unitConverter={unitConverter}
+          >
             <Form
               labelFor="search"
               id="search"
@@ -63,7 +79,10 @@ const WeatherPage = () => {
             </Form>
           </CurrentDayWeather>
 
-          <FullDayWeather weather={currentWeather} />
+          <FullDayWeather
+            weather={currentWeather}
+            unitConverter={unitConverter}
+          />
         </>
       )}
     </WeatherPageSection>

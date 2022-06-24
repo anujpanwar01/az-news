@@ -1,11 +1,12 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { FaTemperatureHigh } from "react-icons/fa";
 
 const CurrentWeather = (props) => {
-  const { currentWeather, className } = props;
+  const { currentWeather, className, unitConverter } = props;
+
+  const { unit } = useSelector((state) => state.weather);
   const timeRef = useRef();
 
   useEffect(() => {
@@ -35,17 +36,15 @@ const CurrentWeather = (props) => {
             </div>
           )}
           <div className="temp">
-            <h1>{currentWeather?.temp}</h1>
-            <p>°C</p>
+            <h1>{unitConverter(currentWeather?.temp, unit)}</h1>
           </div>
           <div className="time">
             <p>{currentWeather?.day}</p>
-
             <p ref={timeRef}></p>
           </div>
           <div className="feel-like">
             <FaTemperatureHigh size={20} />
-            <p>{currentWeather?.feelsLike} °C</p>
+            <p>{unitConverter(currentWeather?.feelsLike, unit)} </p>
           </div>
           <h2>{currentWeather?.des}</h2>
         </div>
