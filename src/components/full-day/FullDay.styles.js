@@ -95,7 +95,8 @@ export const TodayHoursWeather = styled.div`
     cursor: pointer;
     z-index: 1000;
     &:disabled {
-      background: #00000078;
+      background: #0000002e;
+      border: 1px solid #0000002e;
     }
   }
   .right-btn {
@@ -126,29 +127,7 @@ export const TodayHoursWeather = styled.div`
     ${"" /* box-shadow: 0rem 0rem 4rem #00000069; */}
   }
 `;
-export const TodayHourWeather = styled.div`
-  flex: 0 0 auto;
-  padding: 1rem 3rem 2rem;
-  transition: all 500ms ease;
-  cursor: pointer;
-  box-shadow: 0 0 1rem #0000004f;
-  ${flex("center", "column")}
-  img {
-    margin-bottom: 1rem;
-  }
-  &:hover {
-    box-shadow: 0 0 2rem #00000078;
-  }
-  border-radius: 1rem;
 
-  margin-right: 3rem;
-
-  .min-max-temp {
-    ${flex("space-around")};
-    font-size: 1.2rem;
-    margin-top: 1rem;
-  }
-`;
 export const Temprature = styled.div`
   ${card("red")};
   .high-temp,
