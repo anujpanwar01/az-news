@@ -175,4 +175,12 @@ animation:cycle 1s infinite;
       transform:rotate(360deg)
     }
   }
+  .centered{
+    ${flex()};
+    height:100vh;
+  }
+  .error-text{
+    color:red;
+    font-size:1.8rem;
+  }
 `;

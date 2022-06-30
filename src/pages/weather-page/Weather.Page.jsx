@@ -10,6 +10,7 @@ import {
   Form,
   WeatherPageSection,
 } from "./Weather.Page.styles";
+import Error from "../../components/error/Error";
 const unitConverter = (data, unit) => {
   const dot = unit !== "k" ? "°" : "";
   let temp;
@@ -59,12 +60,15 @@ const WeatherPage = () => {
     dispatch(getCurrentWeather(userTypedCity, lat, lon));
   }, [dispatch, cityName, countryCode, userTypedCity, lat, lon]);
 
+  if (error && !isCroodsLoading) {
+    return <Error error={error} />;
+  }
   return (
     <WeatherPageSection>
       {(weather?.isLoading || isCroodsLoading) && (
         <Spinner className="weather-spinner" />
       )}
-      {error && !isCroodsLoading && <p className="error-text">{error}</p>}
+
       {!weather?.isLoading && (
         <>
           <CurrentDayWeather

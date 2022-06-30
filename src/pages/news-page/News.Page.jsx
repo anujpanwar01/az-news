@@ -1,9 +1,40 @@
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import NewsCard from "../../components/news-card/NewsCard";
+import useLazyLoad from "../../hooks/use-lazyLoad";
+import { getNews } from "../../store/news/news.action";
+let start = false;
 const NewsPage = () => {
+  const { articles } = useSelector((state) => state.news);
+  const [page, setPage] = useState(1);
+  const { setElement } = useLazyLoad(setPage);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("init");
+    console.log(page);
+    if (start) dispatch(getNews());
+    start = true;
+    // fetch(
+    //   "https://newsapi.org/v2/top-headlines?country=in&apiKey=02fa5f3687c94273b7d3c55f302e7a1d"
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
+    // fetch(
+    //   "https://newsapi.org/v2/top-headlines?sources=google-news-in&apiKey=02fa5f3687c94273b7d3c55f302e7a1d"
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) => setData(data.articles));
+  }, [dispatch, page]);
+  console.log(articles);
   return (
     <main>
       news page
       <Link to={"/weather"}>weaher</Link>
+      {articles.map((news, i) => (
+        <NewsCard key={i} news={news} />
+      ))}
+      <section ref={setElement}>sdfs</section>
     </main>
   );
 };
