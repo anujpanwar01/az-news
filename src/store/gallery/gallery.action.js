@@ -1,6 +1,9 @@
 import { getGalleryImage, setNotification } from "./gallery.slice";
 
+ weather
+
 let start = false;
+
 export const fetchImgHandler = (url) => {
   return async (dispatch) => {
     dispatch(
@@ -16,9 +19,14 @@ export const fetchImgHandler = (url) => {
     };
     try {
       const response = await imgHandler();
+ weather
+      if (response.errors) {
+        console.log(response.errors);
+
       // dispatch(getGalleryImage([]));
       if (response.errors) {
         console.log(response.errors, "not send");
+
         dispatch(
           setNotification({
             isLoading: false,
@@ -27,6 +35,7 @@ export const fetchImgHandler = (url) => {
         );
       } else {
         dispatch(getGalleryImage(response));
+ weather
 
         dispatch(
           setNotification({
@@ -46,6 +55,8 @@ export const fetchImgHandler = (url) => {
     }
   };
 };
+weather
+
 /*
 className: "grid-img-19"
 img:
@@ -70,3 +81,4 @@ urls: {raw: 'https://images.unsplash.com/photo-1484154218962-a1…Hx8aG9tZXxlbnw
 user: {id: 'DwCCWPTsFF8', updated_at: '2022-06-27T01:32:24-04:00', username: 'naomish', name: 'Naomi Hébert', first_name: 'Naomi', …}
 width: 4288
 */
+

@@ -9,6 +9,12 @@ export const GalleryGrid = styled.div`
   grid-gap: 1.5rem;
   padding: 1.5rem;
 
+weather
+export const RandomGalleryContainer = styled.section`
+  section {
+    height: 100vh;
+    width: 100%;
+
   @media only screen and (max-width: 37.5em) {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -53,5 +59,6 @@ export const Form = styled(SearchForm)`
 export const RandomGalleryContainer = styled.section`
   section {
     padding: 2rem;
+
   }
 `;
