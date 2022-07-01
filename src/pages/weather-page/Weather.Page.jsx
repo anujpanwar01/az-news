@@ -12,6 +12,7 @@ import {
 } from "./Weather.Page.styles";
 import Error from "../../components/error/Error";
 
+ covid-page
 const unitConverter = (data, unit) => {
   const dot = unit !== "k" ? "°" : "";
   let temp;
@@ -61,12 +62,18 @@ const WeatherPage = () => {
     if (!cityName || !countryCode) return;
     dispatch(getCurrentWeather(userTypedCity, lat, lon));
   }, [dispatch, cityName, countryCode, userTypedCity, lat, lon]);
+
   // console.log(weather);
   if (
     (error && !isCroodsLoading) ||
     (weather.notification?.error && !weather.notification.isLoading)
   ) {
     return <Error error={error || weather.notification?.error} />;
+
+
+  if (error && !isCroodsLoading) {
+    return <Error error={error} />;
+ covid-page
   }
   return (
     <WeatherPageSection>
@@ -74,7 +81,11 @@ const WeatherPage = () => {
         <Spinner className="weather-spinner" />
       )}
 
+
       {!weather?.notification?.isLoading && (
+
+      {!weather?.isLoading && (
+ covid-page
         <>
           <CurrentDayWeather
             currentWeather={currentWeather}

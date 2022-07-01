@@ -9,7 +9,9 @@ const useLazyLoad = (pageHandler) => {
           if (pageHandler) pageHandler((prevPage) => prevPage + 1);
         }
       },
+
       { threshold: 0.3, rootMargin: "-50px" }
+
     )
   );
 

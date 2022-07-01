@@ -1,5 +1,6 @@
 import { getGalleryImage, setNotification } from "./gallery.slice";
 
+let start = false;
 export const fetchImgHandler = (url) => {
   return async (dispatch) => {
     dispatch(
