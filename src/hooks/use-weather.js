@@ -1,17 +1,12 @@
 import { useCallback, useState } from "react";
 import useFetch from "./use-fetch";
 
+const key = process.env.REACT_APP_GEOCODE;
 const useWeather = (city) => {
   const [data, setData] = useState(null);
   const [err, setErr] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { response: cityData } = useFetch(city);
-
-  // const getWeatherByCity = useCallback(async (city) => {
-  //   fetch(
-  //     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=7bfc1e9afba40d58a73f87768b8430ae`
-  //   );
-  // },[]);
 
   const getWeatherByCoords = useCallback(async (lat, lon) => {
     if (!lat || !lon) {
@@ -22,8 +17,6 @@ const useWeather = (city) => {
     try {
       const res = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7bfc1e9afba40d58a73f87768b8430ae&units=metric`
-        // `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=7bfc1e9afba40d58a73f87768b8430ae&units=metric`
-        // `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=7bfc1e9afba40d58a73f87768b8430ae`
       );
       const data = await res.json();
       setData(data);
