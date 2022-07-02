@@ -26,7 +26,7 @@ export const CarouselContent = styled.div`
   scrollbar-width: none;
   padding: 1rem;
   &::-webkit-scrollbar,
-  &::-webkit-scrollbar {
+  &::-moz-scrollbar {
     display: none;
   }
 

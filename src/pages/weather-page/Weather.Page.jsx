@@ -10,6 +10,8 @@ import {
   Form,
   WeatherPageSection,
 } from "./Weather.Page.styles";
+import Error from "../../components/error/Error";
+
 const unitConverter = (data, unit) => {
   const dot = unit !== "k" ? "°" : "";
   let temp;
@@ -35,9 +37,11 @@ const WeatherPage = () => {
     longitude: lon,
     isCroodsLoading,
     geoError: error,
+    apiError,
   } = useCroods();
+
   const [userTypedCity, setUserTypedCity] = useState("");
-  console.log(isCroodsLoading);
+
   const submitFormHandler = (e) => {
     e.preventDefault();
     const enteredCity = inputRef.current?.value;
@@ -59,13 +63,22 @@ const WeatherPage = () => {
     dispatch(getCurrentWeather(userTypedCity, lat, lon));
   }, [dispatch, cityName, countryCode, userTypedCity, lat, lon]);
 
+  // console.log(weather);
+  if (
+    (error && !isCroodsLoading) ||
+    (weather.notification?.error && !weather.notification.isLoading) ||
+    error
+  ) {
+    return <Error error={error || weather.notification?.error} />;
+  }
+
   return (
     <WeatherPageSection>
-      {(weather?.isLoading || isCroodsLoading) && (
+      {(weather?.notification?.isLoading || isCroodsLoading) && (
         <Spinner className="weather-spinner" />
       )}
-      {error && !isCroodsLoading && <p className="error-text">{error}</p>}
-      {!weather?.isLoading && (
+
+      {!weather?.notification?.isLoading && (
         <>
           <CurrentDayWeather
             currentWeather={currentWeather}

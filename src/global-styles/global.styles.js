@@ -145,7 +145,7 @@ animation:cycle 1s infinite;
   }
 
   .error-text{
-    color:#9e0000;
+    color:#9e0000 !important;
   }
   .error-svg{
     fill:#9e0000;
@@ -174,5 +174,13 @@ animation:cycle 1s infinite;
     to{
       transform:rotate(360deg)
     }
+  }
+  .centered{
+    ${flex()};
+    height:100vh;
+  }
+  .error-text{
+    color:red;
+    font-size:1.8rem;
   }
 `;

@@ -1,4 +1,6 @@
+import Error from "../../components/error/Error";
+
 const PageNotFound = () => {
-  return <section>page not found</section>;
+  return <Error error={"Page not Found"} notFound={"beck"} />;
 };
 export default PageNotFound;

@@ -1,4 +1,4 @@
-import { setIsLoading, weather } from "./weather.slice";
+import { setNotification, weather } from "./weather.slice";
 
 export const getCurrentWeather = (cityName, lat, lon) => {
   const api_key = process.env.REACT_APP_WEATHER_API;
@@ -13,7 +13,12 @@ export const getCurrentWeather = (cityName, lat, lon) => {
     "Sunday",
   ];
   return async (dispatch) => {
-    dispatch(setIsLoading(true));
+    dispatch(
+      setNotification({
+        isLoading: true,
+        error: "",
+      })
+    );
 
     const userLocationWeather = async () => {
       let data;
@@ -78,10 +83,20 @@ export const getCurrentWeather = (cityName, lat, lon) => {
         days: data?.days,
       });
 
-      dispatch(setIsLoading(false));
+      dispatch(
+        setNotification({
+          isLoading: false,
+          error: "",
+        })
+      );
       dispatch(weather(transformedData[0]));
     } catch (err) {
-      dispatch(setIsLoading(false));
+      dispatch(
+        setNotification({
+          isLoading: false,
+          error: err.message,
+        })
+      );
     }
   };
 };
