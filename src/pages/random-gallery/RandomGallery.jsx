@@ -1,10 +1,11 @@
+
+
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Error from "../../components/error/Error";
 import Galleries from "../../components/gallery/Gallery";
 import { LoadingSpinner } from "../../components/spinner/Spinner.styles";
-import useCroods from "../../hooks/use-croods";
 
 import useLazyLoad from "../../hooks/use-lazyLoad";
 import { fetchImgHandler } from "../../store/gallery/gallery.action";
@@ -19,10 +20,7 @@ let start = false;
 
 const RandomGallery = (props) => {
   const dispatch = useDispatch();
-  const {
-    userCountryCode: { adminName1 },
-  } = useCroods();
-  console.log(adminName1);
+
   const [page, setPage] = useState(1);
   const { setElement: setElementHandler } = useLazyLoad(setPage);
   const [enteredSearch, setEnteredSearch] = useState("home");
@@ -35,17 +33,13 @@ const RandomGallery = (props) => {
   };
 
   useEffect(() => {
-    let url;
-    if (adminName1) {
-      url = `https://api.unsplash.com/search/photos?page=${page}&query=${adminName1}&client_id=${API_KEY}`;
-    } else {
-      url = `https://api.unsplash.com/search/photos?page=${page}&query=${enteredSearch}&client_id=${API_KEY}`;
-    }
+    const url = `https://api.unsplash.com/search/photos?page=${page}&query=${enteredSearch}&client_id=${API_KEY}`;
+
     if (start) {
       dispatch(fetchImgHandler(url));
     }
     return () => (start = true);
-  }, [dispatch, page, enteredSearch, adminName1]);
+  }, [dispatch, page, enteredSearch]);
 
   if (props.notification?.isLoading) {
     return (
@@ -60,6 +54,7 @@ const RandomGallery = (props) => {
 
   return (
     <RandomGalleryContainer>
+
       <Form
         placeholder={"Type City or anything full name"}
         ref={valueRef}
@@ -73,7 +68,6 @@ const RandomGallery = (props) => {
         ))}
       </GalleryGrid>
       <section className="sec" ref={setElementHandler}>
-        {/* sd */}
       </section>
     </RandomGalleryContainer>
   );

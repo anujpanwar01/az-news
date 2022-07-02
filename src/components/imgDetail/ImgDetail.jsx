@@ -57,6 +57,7 @@ const ImgDetail = (props) => {
                 hover={hover}
                 target="_blank"
                 rel="noreferrer"
+
                 onMouseOver={() => setHover("download")}
                 onMouseDown={() => setHover("download")}
               >

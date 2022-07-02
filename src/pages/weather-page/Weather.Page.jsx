@@ -12,6 +12,7 @@ import {
 } from "./Weather.Page.styles";
 import Error from "../../components/error/Error";
 
+
 const unitConverter = (data, unit) => {
   const dot = unit !== "k" ? "°" : "";
   let temp;
@@ -66,11 +67,13 @@ const WeatherPage = () => {
   // console.log(weather);
   if (
     (error && !isCroodsLoading) ||
+
     (weather.notification?.error && !weather.notification.isLoading) ||
     error
   ) {
     return <Error error={error || weather.notification?.error} />;
   }
+
 
   return (
     <WeatherPageSection>
@@ -78,7 +81,11 @@ const WeatherPage = () => {
         <Spinner className="weather-spinner" />
       )}
 
+
       {!weather?.notification?.isLoading && (
+
+
+
         <>
           <CurrentDayWeather
             currentWeather={currentWeather}

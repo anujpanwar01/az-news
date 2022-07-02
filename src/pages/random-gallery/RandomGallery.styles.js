@@ -8,7 +8,9 @@ export const GalleryGrid = styled.div`
   min-height: 100vh;
   grid-gap: 1.5rem;
   padding: 1.5rem;
+
 `;
+
 export const RandomGalleryContainer = styled.section`
   section {
     height: 100vh;
@@ -34,6 +36,7 @@ export const Form = styled(SearchForm)`
     border-radius: 0.5rem;
     border: none;
     width: 60%;
+
     padding: 1.4rem 1rem;
     font-size: 1.6rem;
 
@@ -48,12 +51,21 @@ export const Form = styled(SearchForm)`
   button {
     padding: 0.8rem 2rem;
     margin-left: 1rem;
+
     background-color: #2d99c0;
+
     border: none;
     font-size: 1.4rem;
     text-transform: capitalize;
     border-radius: 0.5rem;
     color: white;
     cursor: pointer;
+
+  }
+`;
+export const RandomGalleryContainer = styled.section`
+  section {
+    padding: 2rem;
+
   }
 `;
