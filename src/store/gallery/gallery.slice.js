@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   images: [],
   notification: null,
- weather
 
   filterImg: [],
 
@@ -13,8 +12,6 @@ const gallerySlice = createSlice({
   initialState,
   reducers: {
     getGalleryImage: (state, action) => {
- weather
-      state.images = action.payload;
 
       state.images.push(...action.payload);
 
@@ -29,7 +26,6 @@ const gallerySlice = createSlice({
         newArr.push(val);
       }
       state.filterImg = newArr;
-
     },
     setNotification: (state, action) => {
       state.notification = action.payload;

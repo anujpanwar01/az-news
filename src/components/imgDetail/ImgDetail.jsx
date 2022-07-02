@@ -40,6 +40,8 @@ const ImgDetail = (props) => {
                 href={findImg.links.download}
                 className="download"
                 hover={hover}
+                target="_blank"
+                rel="noreferrer"
                 onMouseOver={() => {
                   setHover("auth");
                 }}
@@ -53,6 +55,9 @@ const ImgDetail = (props) => {
                 href={findImg.user?.self}
                 className="photograph"
                 hover={hover}
+                target="_blank"
+                rel="noreferrer"
+
                 onMouseOver={() => setHover("download")}
                 onMouseDown={() => setHover("download")}
               >

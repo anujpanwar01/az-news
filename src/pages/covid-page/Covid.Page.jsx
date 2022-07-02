@@ -129,7 +129,11 @@ const CovidPage = () => {
 
   return (
     <CovidContainer>
-      {(!isCroodsLoading || geoError || apiError) && statusContent}
+      {(!isCroodsLoading ||
+        geoError ||
+        apiError ||
+        covid.notification?.status === "error") &&
+        statusContent}
       {(!isCroodsLoading || !geoError || !apiError) && (
         <>
           <CovidCurrentDate>

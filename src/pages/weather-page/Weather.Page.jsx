@@ -12,7 +12,7 @@ import {
 } from "./Weather.Page.styles";
 import Error from "../../components/error/Error";
 
- covid-page
+
 const unitConverter = (data, unit) => {
   const dot = unit !== "k" ? "°" : "";
   let temp;
@@ -38,10 +38,11 @@ const WeatherPage = () => {
     longitude: lon,
     isCroodsLoading,
     geoError: error,
+    apiError,
   } = useCroods();
 
   const [userTypedCity, setUserTypedCity] = useState("");
-  // console.log(isCroodsLoading);
+
   const submitFormHandler = (e) => {
     e.preventDefault();
     const enteredCity = inputRef.current?.value;
@@ -66,15 +67,14 @@ const WeatherPage = () => {
   // console.log(weather);
   if (
     (error && !isCroodsLoading) ||
-    (weather.notification?.error && !weather.notification.isLoading)
+
+    (weather.notification?.error && !weather.notification.isLoading) ||
+    error
   ) {
     return <Error error={error || weather.notification?.error} />;
-
-
-  if (error && !isCroodsLoading) {
-    return <Error error={error} />;
- covid-page
   }
+
+
   return (
     <WeatherPageSection>
       {(weather?.notification?.isLoading || isCroodsLoading) && (
@@ -84,8 +84,8 @@ const WeatherPage = () => {
 
       {!weather?.notification?.isLoading && (
 
-      {!weather?.isLoading && (
- covid-page
+
+
         <>
           <CurrentDayWeather
             currentWeather={currentWeather}

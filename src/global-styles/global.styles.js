@@ -145,7 +145,7 @@ animation:cycle 1s infinite;
   }
 
   .error-text{
-    color:#9e0000;
+    color:#9e0000 !important;
   }
   .error-svg{
     fill:#9e0000;

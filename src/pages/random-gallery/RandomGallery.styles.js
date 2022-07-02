@@ -9,7 +9,8 @@ export const GalleryGrid = styled.div`
   grid-gap: 1.5rem;
   padding: 1.5rem;
 
-weather
+`;
+
 export const RandomGalleryContainer = styled.section`
   section {
     height: 100vh;
@@ -22,6 +23,7 @@ export const RandomGalleryContainer = styled.section`
     grid-template-columns: 1fr;
   }
 `;
+
 export const Form = styled(SearchForm)`
   margin-top: 2rem;
   width: 100%;
@@ -34,10 +36,12 @@ export const Form = styled(SearchForm)`
     border-radius: 0.5rem;
     border: none;
     width: 60%;
-    padding: 1.2rem 1rem;
+
+    padding: 1.4rem 1rem;
     font-size: 1.6rem;
+
     &::placeholder {
-      color: grey;
+      color: gray;
       letter-spacing: 0.6px;
     }
     @media only screen and (max-width: 25em) {
@@ -47,13 +51,16 @@ export const Form = styled(SearchForm)`
   button {
     padding: 0.8rem 2rem;
     margin-left: 1rem;
-    background-color: orange;
+
+    background-color: #2d99c0;
+
     border: none;
     font-size: 1.4rem;
     text-transform: capitalize;
     border-radius: 0.5rem;
     color: white;
     cursor: pointer;
+
   }
 `;
 export const RandomGalleryContainer = styled.section`
