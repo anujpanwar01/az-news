@@ -8,7 +8,7 @@ export const NewsCards = styled.div`
   border: 1px solid gray;
   overflow: hidden;
   .img-container {
-    width: 90%;
+    width: 70rem;
     margin-right: 2rem;
     ${"" /* height: 10rem; */}
     img {
@@ -36,8 +36,22 @@ export const NewsCards = styled.div`
   .source {
     display: flex;
     align-self: flex-end;
-    padding: 0 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1.4rem 1rem;
+    button:not(:last-child) {
+      margin-right: 2rem;
+      cursor: pointer;
+    }
+    .share-news {
+      background: transparent;
+      border: none;
+    }
     p {
+      font-size: 1.2rem;
+      margin: 0 2rem;
+    }
+    time {
       font-size: 1.2rem;
     }
   }

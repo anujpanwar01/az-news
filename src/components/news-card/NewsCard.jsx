@@ -1,23 +1,47 @@
 import { NewsCards } from "./NewsCard.Styles";
+import { BsShare } from "react-icons/bs";
+
 const NewsCard = (props) => {
-  console.log(props.news);
   const updatedDescription = (str) => {
     if (!str) return;
     const findIndex = str.lastIndexOf("[");
     return str.slice(0, findIndex || -3).trim();
   };
+  const shareNews = async () => {
+    try {
+      await navigator.share(props.news);
+    } catch (err) {
+      alert("Error: " + err);
+    }
+  };
+
+  let content =
+    new Date(props.news?.publishedAt).getDate() === new Date().getDate()
+      ? "Today"
+      : new Date(props.news?.publishedAt).toLocaleString();
+
   return (
     <NewsCards>
       <div className="img-container">
         <img src={props.news.urlToImage} alt={props.news.title} />
       </div>
       <div className="text-cotainer">
-        <a href={props.news?.url}>{props.news.title}</a>
+        <a href={props.news?.url} target="_blank" rel="noreferrer">
+          {props.news.title}
+        </a>
         {!props.news?.content && <p>{props.news?.description}</p>}
         <p>{updatedDescription(props.news?.content)}</p>
+
         <div className="source">
+          <time>
+            {content}
+            {new Date(props.news.publishedAt).toLocaleString().split(",")[1]}
+          </time>
+
           <p>{props.news?.source?.name}</p>
-          <button>share</button>
+          <button className="share-news" onClick={shareNews}>
+            <BsShare />
+          </button>
           <button>like</button>
         </div>
       </div>
