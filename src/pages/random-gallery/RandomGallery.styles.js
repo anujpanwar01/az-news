@@ -8,13 +8,13 @@ export const GalleryGrid = styled.div`
   min-height: 100vh;
   grid-gap: 1.5rem;
   padding: 1.5rem;
-
 `;
 
 export const RandomGalleryContainer = styled.section`
   section {
     height: 100vh;
     width: 100%;
+    padding: 2rem;
 
   @media only screen and (max-width: 37.5em) {
     grid-template-columns: repeat(2, 1fr);
@@ -60,12 +60,5 @@ export const Form = styled(SearchForm)`
     border-radius: 0.5rem;
     color: white;
     cursor: pointer;
-
-  }
-`;
-export const RandomGalleryContainer = styled.section`
-  section {
-    padding: 2rem;
-
   }
 `;
