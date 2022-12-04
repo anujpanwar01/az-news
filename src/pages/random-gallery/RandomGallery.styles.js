@@ -63,9 +63,9 @@ export const Form = styled(SearchForm)`
 
   }
 `;
-export const RandomGalleryContainer = styled.section`
-  section {
-    padding: 2rem;
+// export const RandomGalleryContainer = styled.section`
+//   section {
+//     padding: 2rem;
 
-  }
-`;
+//   }
+// `;
